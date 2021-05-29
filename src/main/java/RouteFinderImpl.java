@@ -31,19 +31,53 @@ public class RouteFinderImpl implements RouteFinder {
 
                 if (!costToPoint.containsKey(neighbor) || newCost < costToPoint.get(neighbor)) {
                     costToPoint.put(neighbor, newCost);
-                    int priority = newCost + distanceToGoal(marsMap.getGoalPosition(), neighbor);
+                    int priority = newCost + marsMap.distanceToGoal(neighbor);
                     frontier.add(new Pair<>(neighbor, newCost + priority));
                     cameFrom.put(neighbor, current.getValue0());
                 }
             }
         }
 
-        System.out.println();
-
-        return null;
+        return createRoute(marsMap, cameFrom);
     }
 
-    private int distanceToGoal(Pair<Integer, Integer> goal, Pair<Integer, Integer> nextPoint) {
-        return (abs(goal.getValue0() - nextPoint.getValue0()) + abs(goal.getValue1() - nextPoint.getValue1()));
+
+    private char[][] createRoute(Map map, HashMap<Pair<Integer, Integer>,Pair<Integer, Integer>> cameFrom) {
+        char[][] finalRoute = new char[map.getMap().length][map.getMap()[0].length];
+        Pair<Integer, Integer> goal = map.getGoalPosition();
+
+        if (cameFrom.containsKey(goal)) {
+            Pair<Integer, Integer> previous = cameFrom.get(goal);
+
+            while (previous != null) {
+                finalRoute[previous.getValue0()][previous.getValue1()] = '+';
+                previous = cameFrom.get(previous);
+            }
+
+            for (int i = 0; i < finalRoute.length; i++) {
+                for (int j = 0; j < finalRoute[0].length; j++) {
+                    switch (map.getMap()[i][j]) {
+                        case 0:
+                            finalRoute[i][j] = 'X';
+                            break;
+                        case 1:
+                            if (finalRoute[i][j] != '+') {
+                                finalRoute[i][j] = '.';
+                            }
+                            break;
+                        case 2:
+                            finalRoute[i][j] = '@';
+                            break;
+                        case 3:
+                            finalRoute[i][j] = '#';
+                            break;
+                    }
+                }
+            }
+
+            return finalRoute;
+        }
+
+        return null;
     }
 }

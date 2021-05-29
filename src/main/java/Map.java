@@ -3,6 +3,8 @@ import org.javatuples.Pair;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class Map {
     private final int[][] map;
     private Pair<Integer, Integer> startPosition;
@@ -65,5 +67,9 @@ public class Map {
         }
 
         return neighbors;
+    }
+
+    public int distanceToGoal(Pair<Integer, Integer> nextPoint) {
+        return (abs(goalPosition.getValue0() - nextPoint.getValue0()) + abs(goalPosition.getValue1() - nextPoint.getValue1()));
     }
 }
