@@ -10,10 +10,15 @@ import java.util.List;
 
 import static java.lang.Math.abs;
 
+/***
+ * Объект карты
+ */
 public class Map {
+    // Карта, представленная в виде чисел(возможно расширение, если добавить на карту покрытия разной степени проходимости)
     private final int[][] map;
     private Pair<Integer, Integer> startPosition;
     private Pair<Integer, Integer> goalPosition;
+
 
     public Map(char[][] map) throws NoStartPositionException, NoGoalPositionException, IllegalSymbolException {
         this.map = new int[map.length][map[0].length];
@@ -62,6 +67,11 @@ public class Map {
         return goalPosition;
     }
 
+    /***
+     * Получение соседей точки
+     * @param point точка, у которой нужно найти соседей
+     * @return массив всех соседей
+     */
     public List<Pair<Integer, Integer>> getNeighbors(Pair<Integer, Integer> point) {
         List<Pair<Integer, Integer>> neighbors = new ArrayList<>();
 
@@ -84,7 +94,12 @@ public class Map {
         return neighbors;
     }
 
-    public int distanceToGoal(Pair<Integer, Integer> nextPoint) {
-        return (abs(goalPosition.getValue0() - nextPoint.getValue0()) + abs(goalPosition.getValue1() - nextPoint.getValue1()));
+    /***
+     * Расстояние до финальной точки(Манхэттеновское расстояние)
+     * @param point точка, откуда вычисляется расстояние до цели
+     * @return расстояние до цели
+     */
+    public int distanceToGoal(Pair<Integer, Integer> point) {
+        return (abs(goalPosition.getValue0() - point.getValue0()) + abs(goalPosition.getValue1() - point.getValue1()));
     }
 }

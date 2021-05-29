@@ -6,7 +6,7 @@ import routeFinder.RouteFinderImpl;
 public class Main {
     public static void main(String[] args) throws NoStartPositionException, NoGoalPositionException, IllegalSymbolException {
         char[][] map = new char[][] {
-                {'.', '.' , '1' , '@', '.'},
+                {'.', '.' , '.' , '@', '.'},
                 {'#', '.' , '#' , '#', '#'},
                 {'.', '.' , '.' , '.', '.'},
                 {'.', '.' , '.' , '.', 'X'},
@@ -14,6 +14,6 @@ public class Main {
         };
 
         RouteFinderImpl routeFinder = new RouteFinderImpl();
-        routeFinder.findRoute(map);
+        char[][] finalRoute = routeFinder.findRoute(map);
     }
 }
