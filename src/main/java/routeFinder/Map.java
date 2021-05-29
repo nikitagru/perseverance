@@ -1,3 +1,8 @@
+package routeFinder;
+
+import exceptions.IllegalSymbolException;
+import exceptions.NoGoalPositionException;
+import exceptions.NoStartPositionException;
 import org.javatuples.Pair;
 
 import java.util.ArrayList;
@@ -10,7 +15,7 @@ public class Map {
     private Pair<Integer, Integer> startPosition;
     private Pair<Integer, Integer> goalPosition;
 
-    public Map(char[][] map) {
+    public Map(char[][] map) throws NoStartPositionException, NoGoalPositionException, IllegalSymbolException {
         this.map = new int[map.length][map[0].length];
 
         for (int i = 0; i < map.length; i++) {
@@ -30,8 +35,18 @@ public class Map {
                         this.map[i][j] = 0;
                         this.goalPosition = new Pair<>(i, j);
                         break;
+                    default:
+                        throw new IllegalSymbolException(map[i][j]);
                 }
             }
+        }
+
+        if (startPosition == null) {
+            throw new NoStartPositionException();
+        }
+
+        if (goalPosition == null) {
+            throw new NoGoalPositionException();
         }
     }
 

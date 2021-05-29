@@ -1,14 +1,17 @@
+package routeFinder;
+
+import exceptions.IllegalSymbolException;
+import exceptions.NoGoalPositionException;
+import exceptions.NoStartPositionException;
 import org.javatuples.Pair;
 
 import java.util.HashMap;
-
-import static java.lang.Math.abs;
 
 public class RouteFinderImpl implements RouteFinder {
     private HashMap<Pair<Integer, Integer>,Pair<Integer, Integer>> cameFrom;
     private HashMap<Pair<Integer, Integer>, Integer> costToPoint;
 
-    public char[][] findRoute(char[][] map) {
+    public char[][] findRoute(char[][] map) throws NoStartPositionException, NoGoalPositionException, IllegalSymbolException {
         Map marsMap = new Map(map);
         cameFrom = new HashMap<>();
         costToPoint = new HashMap<>();
