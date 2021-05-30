@@ -119,4 +119,16 @@ public class RoutesTests {
 
         assertNotNull(routedMap);
     }
+
+    @Test
+    public void smallMap() throws NoStartPositionException, IllegalSymbolException, NoGoalPositionException {
+        char[][] map = new char[][] {
+                {'@'},
+                {'X'}
+        };
+        char[][] routedMap = finder.findRoute(map);
+
+        assertNotNull(routedMap);
+
+    }
 }
